@@ -30,23 +30,29 @@ struct MenuItemDetail: View {
 
 struct FoodDetail: View {
     var body: some View {
-        List { // Use a List view for standard iOS list behavior
+        List {  // Use a List view for standard iOS list behavior
             ForEach(menu) { section in
-                // Standard list item for the section name
-                Text(section.name).font(.headline)
 
-                // The sub-items can go directly in the ForEach for the list
-                ForEach(section.items) { item in
-                    NavigationLink(destination: MenuItemDetail(menuItem: item)) {
-                        HStack {
-                            Image(item.thumbnailImage)
-                            Text(item.name)
+                Section {
+
+                    // The sub-items can go directly in the ForEach for the list
+                    ForEach(section.items) { item in
+                        NavigationLink(
+                            destination: MenuItemDetail(menuItem: item)
+                        ) {
+                            HStack {
+                                Image(item.thumbnailImage)
+                                Text(item.name)
+                            }
                         }
                     }
                 }
+                // Standard list item for the section name
+                header:  { Text(section.name).font(.headline) }
+
             }
         }
-        .listStyle(.grouped) // Or another list style to control appearance
+        .listStyle(.grouped)  // Or another list style to control appearance
     }
 }
 struct ContentView: View {
