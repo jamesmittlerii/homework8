@@ -7,27 +7,46 @@
 
 import SwiftUI
 
-let menu = Bundle.main.decode([MenuSection].self, from: "MyData")
+let menu: [MenuSection] = Bundle.main.decode([MenuSection].self, from: "MyData")
+
+struct MenuItemDetail: View {
+
+    @State private var isHovering = false
+
+    let menuItem: MenuItem
+    var body: some View {
+        VStack {
+            Image(menuItem.mainImage)
+                .resizable()
+                .scaledToFit()
+            Text("Photo Credit: " + menuItem.photoCredit)
+                .padding(.vertical)
+            Text(menuItem.description).multilineTextAlignment(.leading)
+        }.padding()
+        Spacer()
+
+    }
+}
 
 struct FoodDetail: View {
     var body: some View {
-        ForEach(menu) { section in
-            NavigationLink(destination: {
-                VStack(alignment: .leading) {
-                    ForEach(section.items) { item in
-                        
+        List { // Use a List view for standard iOS list behavior
+            ForEach(menu) { section in
+                // Standard list item for the section name
+                Text(section.name).font(.headline)
+
+                // The sub-items can go directly in the ForEach for the list
+                ForEach(section.items) { item in
+                    NavigationLink(destination: MenuItemDetail(menuItem: item)) {
                         HStack {
                             Image(item.thumbnailImage)
                             Text(item.name)
                         }
                     }
-                    
-                }})
-            {
-                Text(section.name)
+                }
             }
-
         }
+        .listStyle(.grouped) // Or another list style to control appearance
     }
 }
 struct ContentView: View {
