@@ -2,7 +2,7 @@
 
  * __Homework 8__
  * Jim Mittler
- * 23 September 2025
+ * 30 September 2025
 
  
 I changed the original app to use the list and section construct for the food. After selecting a menu item, I display the full picture and description.
